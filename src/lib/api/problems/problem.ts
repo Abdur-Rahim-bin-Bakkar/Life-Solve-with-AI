@@ -174,7 +174,9 @@ export interface OverviewStats {
   totalPosts: number
   solvedPosts: number
   totalComments: number
-  daily: { date: string; posts: number; solved: number; comments: number }[]
+  totalMessages: number
+  totalAiChats: number
+  daily: { date: string; posts: number; solved: number; comments: number; messages: number; aiChats: number }[]
 }
 
 export async function getUserStatsApi(token: string) {
