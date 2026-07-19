@@ -24,17 +24,6 @@ export interface AISessionDetail {
   updatedAt: string
 }
 
-async function getToken(): Promise<string | null> {
-  try {
-    const { authClient } = await import("@/lib/auth-client")
-    const session = await authClient.getSession()
-    const token = session?.data?.session?.token || session?.data?.session?.id || null
-    return token
-  } catch {
-    return null
-  }
-}
-
 export async function sendSolverMessage(message: string, sessionId: string | null, token: string) {
   const res = await fetch(`${BACKEND_URL}/api/ai/solver`, {
     method: "POST",

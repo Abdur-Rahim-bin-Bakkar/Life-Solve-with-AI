@@ -30,7 +30,7 @@ export default function Navbar() {
   const user = session?.user
   const isLoggedIn = !!user
 
-  const links = isLoggedIn ? publicLinks : publicLinks
+  const links = publicLinks
 
   return (
     <nav
