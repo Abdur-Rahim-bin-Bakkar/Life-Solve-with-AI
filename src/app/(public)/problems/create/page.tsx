@@ -28,13 +28,13 @@ const priorities = [
   { id: "Emergency", label: "Emergency", base: "border-red-200 bg-red-50 text-red-700 hover:border-red-300", sel: "bg-red-600 text-white border-red-600" },
 ]
 
-const catStyles: Record<string, string> = {
-  violet: "data-[sel=true]:bg-violet-600 data-[sel=true]:text-white data-[sel=true]:border-violet-600 border-violet-200 bg-violet-50 text-violet-600 hover:border-violet-300",
-  emerald: "data-[sel=true]:bg-emerald-600 data-[sel=true]:text-white data-[sel=true]:border-emerald-600 border-emerald-200 bg-emerald-50 text-emerald-600 hover:border-emerald-300",
-  blue: "data-[sel=true]:bg-blue-600 data-[sel=true]:text-white data-[sel=true]:border-blue-600 border-blue-200 bg-blue-50 text-blue-600 hover:border-blue-300",
-  rose: "data-[sel=true]:bg-rose-600 data-[sel=true]:text-white data-[sel=true]:border-rose-600 border-rose-200 bg-rose-50 text-rose-600 hover:border-rose-300",
-  amber: "data-[sel=true]:bg-amber-600 data-[sel=true]:text-white data-[sel=true]:border-amber-600 border-amber-200 bg-amber-50 text-amber-600 hover:border-amber-300",
-  red: "data-[sel=true]:bg-red-600 data-[sel=true]:text-white data-[sel=true]:border-red-600 border-red-200 bg-red-50 text-red-600 hover:border-red-300",
+const catStyles: Record<string, { sel: string; base: string }> = {
+  violet: { sel: "bg-violet-600 text-white border-violet-600", base: "border-violet-200 bg-violet-50 text-violet-600 hover:border-violet-300" },
+  emerald: { sel: "bg-emerald-600 text-white border-emerald-600", base: "border-emerald-200 bg-emerald-50 text-emerald-600 hover:border-emerald-300" },
+  blue: { sel: "bg-blue-600 text-white border-blue-600", base: "border-blue-200 bg-blue-50 text-blue-600 hover:border-blue-300" },
+  rose: { sel: "bg-rose-600 text-white border-rose-600", base: "border-rose-200 bg-rose-50 text-rose-600 hover:border-rose-300" },
+  amber: { sel: "bg-amber-600 text-white border-amber-600", base: "border-amber-200 bg-amber-50 text-amber-600 hover:border-amber-300" },
+  red: { sel: "bg-red-600 text-white border-red-600", base: "border-red-200 bg-red-50 text-red-600 hover:border-red-300" },
 }
 
 interface FormErrors {
@@ -282,11 +282,10 @@ export default function CreateProblemPage() {
                         <button
                           key={cat.id} type="button"
                           onClick={() => { setCategory(cat.id); clearErr("category") }}
-                          data-sel={sel}
-                          className={`flex items-center gap-2.5 rounded-xl border p-3 text-xs font-medium transition-all duration-200 ${sel ? catStyles[cat.color].split("data-[sel=true]:")[1].split(" data-[sel=true]:")[0] : err ? "border-rose-300 bg-rose-50 text-rose-600" : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"}`}
+                          className={`flex items-center gap-2.5 rounded-xl border p-3 text-xs font-medium transition-all duration-200 ${sel ? catStyles[cat.color].sel : err ? "border-rose-300 bg-rose-50 text-rose-600" : catStyles[cat.color].base}`}
                         >
                           <cat.icon className={`h-4 w-4 ${sel ? "text-white" : ""}`} />
-                          <span className={sel ? "text-white" : ""}>{cat.label}</span>
+                          <span>{cat.label}</span>
                         </button>
                       )
                     })}

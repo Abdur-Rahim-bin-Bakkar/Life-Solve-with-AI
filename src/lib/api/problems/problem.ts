@@ -176,6 +176,9 @@ export interface OverviewStats {
   totalComments: number
   totalMessages: number
   totalAiChats: number
+  totalUsers: number
+  totalAiResponses: number
+  communityRating: number
   daily: { date: string; posts: number; solved: number; comments: number; messages: number; aiChats: number }[]
 }
 

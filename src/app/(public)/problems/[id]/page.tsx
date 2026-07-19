@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { authClient } from "@/lib/auth-client"
 import {
-  ArrowLeft, ThumbsUp, Heart, Frown, Send, Edit3, Trash2, X, Check,
+  ArrowLeft, ThumbsUp, Heart, Angry, Send, Edit3, Trash2, X, Check,
   AlertCircle, Sparkles, Clock, User, MessageCircle, Image as ImageIcon,
   Brain, Wallet, Briefcase, HeartHandshake, HeartPulse, Siren,
 } from "lucide-react"
@@ -35,7 +35,7 @@ const priorityStyles: Record<string, string> = {
 const reactionsConfig = [
   { type: "like" as const, icon: ThumbsUp, label: "Like", activeClass: "text-blue-500 bg-blue-50 border-blue-200", hoverClass: "hover:text-blue-500 hover:bg-blue-50 hover:border-blue-200" },
   { type: "love" as const, icon: Heart, label: "Love", activeClass: "text-rose-500 bg-rose-50 border-rose-200", hoverClass: "hover:text-rose-500 hover:bg-rose-50 hover:border-rose-200" },
-  { type: "sad" as const, icon: Frown, label: "Sad", activeClass: "text-amber-500 bg-amber-50 border-amber-200", hoverClass: "hover:text-amber-500 hover:bg-amber-50 hover:border-amber-200" },
+  { type: "sad" as const, icon: Angry, label: "Sad", activeClass: "text-amber-500 bg-amber-50 border-amber-200", hoverClass: "hover:text-amber-500 hover:bg-amber-50 hover:border-amber-200" },
 ]
 
 export default function ProblemDetailPage() {

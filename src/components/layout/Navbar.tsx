@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { authClient } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
 import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Sparkles, MessageSquareText, MessageSquare } from "lucide-react"
+import NotificationBell from "@/components/notifications/NotificationBell"
 
 const publicLinks = [
   { href: "/", label: "Home" },
@@ -97,6 +98,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
+          {isLoggedIn && <NotificationBell />}
           {isLoggedIn ? (
             <div className="relative">
               <button
