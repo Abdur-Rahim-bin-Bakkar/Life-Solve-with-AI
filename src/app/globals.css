@@ -6,3 +6,11 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+
+a, button, [role="button"], label, input[type="file"]::file-selector-button {
+  cursor: pointer;
+}
+
+a:has(> button), button:disabled, input:disabled, textarea:disabled {
+  cursor: default;
+}
