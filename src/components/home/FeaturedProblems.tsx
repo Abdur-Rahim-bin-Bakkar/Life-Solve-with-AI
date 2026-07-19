@@ -63,13 +63,18 @@ export default function FeaturedProblems() {
                   </Link>
                 )}
                 <div className="flex flex-1 flex-col p-5 pt-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-2">
                     <span className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${meta.bg} ${meta.color}`}>
                       <CatIcon className="h-3 w-3" />{problem.category}
                     </span>
-                    <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${priorityStyles[problem.priority] || priorityStyles.Low}`}>
-                      {problem.priority}
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${priorityStyles[problem.priority] || priorityStyles.Low}`}>
+                        {problem.priority}
+                      </span>
+                      <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${problem.status === "resolved" ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>
+                        {problem.status === "resolved" ? "Solved" : "Open"}
+                      </span>
+                    </div>
                   </div>
 
                 <Link href={`/problems/${problem._id}`} className="cursor-pointer">

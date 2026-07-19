@@ -101,7 +101,7 @@ export default function RegisterPage() {
               <Sparkles className="h-10 w-10 text-amber-400" />
             </motion.div>
           </div>
-          <h2 className="mt-8 text-3xl font-bold text-white">Join LifeSolve</h2>
+          <h2 className="mt-8 text-3xl font-bold text-white">Join LifeSolve AI</h2>
           <p className="mt-4 text-lg leading-relaxed text-teal-100">
             Become part of a community that cares. Share, heal, and grow together with people who understand.
           </p>
@@ -122,9 +122,12 @@ export default function RegisterPage() {
         >
           <Link href="/" className="inline-flex items-center gap-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-violet-600 shadow-lg">
-              <span className="text-sm font-bold text-white">LS</span>
+              <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 3a3 3 0 0 0-3 3v1.5c0 1-.5 1.8-1.3 2.3A5 5 0 0 0 5 14.5V16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1.5a5 5 0 0 0-2.7-4.4c-.8-.5-1.3-1.4-1.3-2.3V6a3 3 0 0 0-3-3z" />
+                <path d="M9 18v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2" />
+              </svg>
             </div>
-            <span className="text-lg font-semibold text-slate-900">LifeSolve</span>
+            <span className="text-lg font-semibold text-slate-900">LifeSolve <span className="bg-gradient-to-r from-teal-600 to-violet-600 bg-clip-text text-transparent">AI</span></span>
           </Link>
 
           <h1 className="mt-8 text-2xl font-bold text-slate-900">Create account</h1>

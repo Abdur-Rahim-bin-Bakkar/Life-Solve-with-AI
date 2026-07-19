@@ -1,9 +1,10 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Link from "next/link"
 import { SectionHeader } from "@/components/ui/section"
 import { Badge } from "@/components/ui/badge"
-import { Bot, User, Sparkles } from "lucide-react"
+import { Bot, User, Sparkles, ArrowRight } from "lucide-react"
 
 const messages = [
   { role: "user", content: "I've been feeling really anxious about my job interview tomorrow. Any advice?" },
@@ -34,7 +35,7 @@ export default function AIShowcase() {
               </div>
               <div className="ml-3 flex items-center gap-2 text-xs font-medium text-slate-400">
                 <Bot className="h-3.5 w-3.5 text-violet-500" />
-                LifeSolve AI Assistant
+                LifeSolve AI AI Assistant
               </div>
             </div>
 
@@ -100,6 +101,22 @@ export default function AIShowcase() {
               24/7 Available
             </Badge>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+            className="mt-8 text-center"
+          >
+            <p className="mb-4 text-sm text-slate-500">Let&apos;s start problem-solving with AI Chat & Solver</p>
+            <Link
+              href="/problems/solve"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-teal-500/30 hover:scale-105"
+            >
+              Try AI Solver <ArrowRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </section>

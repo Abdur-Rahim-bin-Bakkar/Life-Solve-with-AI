@@ -19,12 +19,12 @@ const faqs = [
     a: "Yes, all conversations with our AI are encrypted and confidential. We don't store or share your personal chat history. Your trust and safety are our top priorities.",
   },
   {
-    q: "Can I use LifeSolve in an emergency?",
-    a: "LifeSolve provides general support and is not a substitute for professional emergency services. If you're in immediate danger, please call 911 or your local emergency number. We do provide quick access to emergency resources.",
+    q: "Can I use LifeSolve AI in an emergency?",
+    a: "LifeSolve AI provides general support and is not a substitute for professional emergency services. If you're in immediate danger, please call 911 or your local emergency number. We do provide quick access to emergency resources.",
   },
   {
-    q: "Is LifeSolve free to use?",
-    a: "Yes, LifeSolve is completely free. We believe support should be accessible to everyone who needs it. Premium features may be added in the future but core functionality will always remain free.",
+    q: "Is LifeSolve AI free to use?",
+    a: "Yes, LifeSolve AI is completely free. We believe support should be accessible to everyone who needs it. Premium features may be added in the future but core functionality will always remain free.",
   },
 ]
 
@@ -36,7 +36,7 @@ export default function FAQ() {
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           title="Frequently Asked Questions"
-          subtitle="Everything you need to know about LifeSolve"
+          subtitle="Everything you need to know about LifeSolve AI"
         />
 
         <div className="mt-12 space-y-3">

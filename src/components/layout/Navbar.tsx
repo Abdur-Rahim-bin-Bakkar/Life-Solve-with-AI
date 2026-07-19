@@ -39,9 +39,14 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="group flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-violet-600 shadow-lg shadow-teal-500/25 transition-transform duration-300 group-hover:scale-105">
-            <span className="text-sm font-bold text-white">LS</span>
+            <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 3a3 3 0 0 0-3 3v1.5c0 1-.5 1.8-1.3 2.3A5 5 0 0 0 5 14.5V16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1.5a5 5 0 0 0-2.7-4.4c-.8-.5-1.3-1.4-1.3-2.3V6a3 3 0 0 0-3-3z" />
+              <path d="M9 18v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2" />
+              <path d="M8 9.5 6 10" />
+              <path d="M16 9.5 18 10" />
+            </svg>
           </div>
-          <span className="text-lg font-semibold text-slate-900">LifeSolve</span>
+          <span className="text-lg font-semibold text-slate-900">LifeSolve <span className="bg-gradient-to-r from-teal-600 to-violet-600 bg-clip-text text-transparent">AI</span></span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">

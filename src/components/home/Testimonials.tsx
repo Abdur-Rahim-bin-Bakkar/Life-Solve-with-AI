@@ -10,7 +10,7 @@ const testimonials = [
     name: "Sarah M.",
     role: "Community Member",
     image: null,
-    quote: "LifeSolve helped me through one of the darkest periods of my life. The AI suggestions were surprisingly accurate, and the community was incredibly supportive. I'm now in a much better place.",
+    quote: "LifeSolve AI helped me through one of the darkest periods of my life. The AI suggestions were surprisingly accurate, and the community was incredibly supportive. I'm now in a much better place.",
     rating: 5,
   },
   {

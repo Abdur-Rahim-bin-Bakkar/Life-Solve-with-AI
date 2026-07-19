@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "LifeSolve - Find Solutions to Life's Problems",
+  title: "LifeSolve AI - Find Solutions to Life's Problems",
   description: "A community-driven platform to share life problems, get AI-powered solutions, and connect with people who care.",
 }
 

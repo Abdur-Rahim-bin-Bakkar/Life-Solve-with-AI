@@ -35,9 +35,12 @@ export default function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="group inline-flex items-center gap-2.5">
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-400 to-violet-500 shadow-lg">
-                <span className="text-sm font-bold text-white">LS</span>
+                <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3a3 3 0 0 0-3 3v1.5c0 1-.5 1.8-1.3 2.3A5 5 0 0 0 5 14.5V16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1.5a5 5 0 0 0-2.7-4.4c-.8-.5-1.3-1.4-1.3-2.3V6a3 3 0 0 0-3-3z" />
+                  <path d="M9 18v2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2" />
+                </svg>
               </div>
-              <span className="text-lg font-semibold text-white">LifeSolve</span>
+              <span className="text-lg font-semibold text-white">LifeSolve <span className="text-teal-400">AI</span></span>
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-slate-400">
               A community-powered platform where you can share life problems, get AI-powered insights, and connect with people who genuinely care. You don&apos;t have to face it alone.
@@ -138,7 +141,7 @@ export default function Footer() {
         <div className="mt-12 border-t border-white/10 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-slate-500">
-              &copy; {new Date().getFullYear()} LifeSolve. Built with care for those who need it most.
+              &copy; {new Date().getFullYear()} LifeSolve AI. Built with care for those who need it most.
             </p>
             <div className="flex gap-6">
               <a href="#" className="text-xs text-slate-500 transition-colors hover:text-slate-400">Privacy</a>
