@@ -1,74 +1,133 @@
+"use client"
+
 import Link from "next/link"
+import { Heart, Mail, MapPin, ArrowUp, Globe, MessageCircle } from "lucide-react"
 
 export default function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   return (
-    <footer className="border-t border-slate-200 bg-slate-50">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600">
+    <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-teal-950">
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')]" />
+      <button
+        onClick={scrollToTop}
+        className="group absolute -top-5 left-1/2 z-10 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border-2 border-white/20 bg-slate-800 text-white shadow-lg transition-all duration-300 hover:border-teal-400 hover:bg-teal-600 hover:shadow-teal-500/25"
+      >
+        <ArrowUp className="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5" />
+      </button>
+
+      <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <Link href="/" className="group inline-flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-400 to-violet-500 shadow-lg">
                 <span className="text-sm font-bold text-white">LS</span>
               </div>
-              <span className="text-lg font-semibold text-slate-900">LifeSolve</span>
+              <span className="text-lg font-semibold text-white">LifeSolve</span>
             </Link>
-            <p className="mt-3 text-sm text-slate-500">
-              A community-driven platform to share life problems, get AI-powered solutions, and connect with people who care.
+            <p className="mt-4 text-sm leading-relaxed text-slate-400">
+              A community-powered platform where you can share life problems, get AI-powered insights, and connect with people who genuinely care. You don&apos;t have to face it alone.
             </p>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900">Quick Links</h3>
-            <ul className="mt-3 space-y-2">
-              <li><Link href="/" className="text-sm text-slate-500 hover:text-indigo-600">Home</Link></li>
-              <li><Link href="/problems" className="text-sm text-slate-500 hover:text-indigo-600">Problems</Link></li>
-              <li><Link href="/about" className="text-sm text-slate-500 hover:text-indigo-600">About</Link></li>
-              <li><Link href="/connect" className="text-sm text-slate-500 hover:text-indigo-600">Connect</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900">Categories</h3>
-            <ul className="mt-3 space-y-2">
-              <li><span className="text-sm text-slate-500">Mental Health</span></li>
-              <li><span className="text-sm text-slate-500">Financial</span></li>
-              <li><span className="text-sm text-slate-500">Career</span></li>
-              <li><span className="text-sm text-slate-500">Relationships</span></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900">Contact</h3>
-            <ul className="mt-3 space-y-2">
-              <li className="flex items-center gap-2 text-sm text-slate-500">
-                <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                support@lifesolve.app
-              </li>
-              <li className="flex items-center gap-2 text-sm text-slate-500">
-                <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                San Francisco, CA
-              </li>
-            </ul>
-            <div className="mt-4 flex gap-3">
-              <a href="#" className="text-slate-400 hover:text-indigo-600 transition-colors">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+            <div className="mt-6 flex gap-3">
+              <a
+                href="#"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-slate-400 transition-all duration-200 hover:bg-teal-500 hover:text-white hover:shadow-lg hover:shadow-teal-500/25"
+              >
+                <Globe className="h-4 w-4" />
               </a>
-              <a href="#" className="text-slate-400 hover:text-indigo-600 transition-colors">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+              <a
+                href="#"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-slate-400 transition-all duration-200 hover:bg-teal-500 hover:text-white hover:shadow-lg hover:shadow-teal-500/25"
+              >
+                <MessageCircle className="h-4 w-4" />
               </a>
+              <a
+                href="#"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-slate-400 transition-all duration-200 hover:bg-teal-500 hover:text-white hover:shadow-lg hover:shadow-teal-500/25"
+              >
+                <Heart className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">Quick Links</h3>
+            <ul className="mt-4 space-y-3">
+              {[
+                { href: "/", label: "Home" },
+                { href: "/problems", label: "Browse Problems" },
+                { href: "/about", label: "About Us" },
+                { href: "/connect", label: "Contact" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-slate-400 transition-colors duration-200 hover:text-teal-400"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">Support</h3>
+            <ul className="mt-4 space-y-3">
+              {["Mental Health", "Financial", "Career", "Relationships", "Emergency"].map((cat) => (
+                <li key={cat}>
+                  <span className="text-sm text-slate-400 transition-colors duration-200 hover:text-teal-400 cursor-pointer">
+                    {cat}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">Get In Touch</h3>
+            <ul className="mt-4 space-y-3">
+              <li>
+                <a
+                  href="mailto:support@lifesolve.app"
+                  className="group flex items-center gap-2.5 text-sm text-slate-400 transition-colors duration-200 hover:text-teal-400"
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-teal-500/20">
+                    <Mail className="h-4 w-4" />
+                  </span>
+                  support@lifesolve.app
+                </a>
+              </li>
+              <li>
+                <span className="group flex items-center gap-2.5 text-sm text-slate-400">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5">
+                    <MapPin className="h-4 w-4" />
+                  </span>
+                  San Francisco, CA
+                </span>
+              </li>
+            </ul>
+            <div className="mt-6 rounded-xl border border-white/10 bg-white/5 p-4">
+              <p className="text-xs font-medium text-slate-300">24/7 Crisis Support</p>
+              <p className="mt-1 text-lg font-bold text-teal-400">1-800-LIFESOLVE</p>
+              <p className="mt-0.5 text-xs text-slate-500">Free & confidential</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-slate-200 pt-8">
-          <p className="text-center text-sm text-slate-400">
-            &copy; {new Date().getFullYear()} LifeSolve. All rights reserved.
-          </p>
+        <div className="mt-12 border-t border-white/10 pt-8">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-sm text-slate-500">
+              &copy; {new Date().getFullYear()} LifeSolve. Built with care for those who need it most.
+            </p>
+            <div className="flex gap-6">
+              <a href="#" className="text-xs text-slate-500 transition-colors hover:text-slate-400">Privacy</a>
+              <a href="#" className="text-xs text-slate-500 transition-colors hover:text-slate-400">Terms</a>
+              <a href="#" className="text-xs text-slate-500 transition-colors hover:text-slate-400">Cookies</a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

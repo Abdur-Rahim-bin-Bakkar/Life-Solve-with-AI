@@ -1,10 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { authClient } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
+import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Sparkles, MessageSquareText } from "lucide-react"
 
 const publicLinks = [
   { href: "/", label: "Home" },
@@ -14,50 +15,91 @@ const publicLinks = [
 ]
 
 const protectedLinks = [
-  { href: "/problems/create", label: "Create Post" },
-  { href: "/problems/manage", label: "Manage Posts" },
-  { href: "/problems/solve", label: "AI Solver" },
-  { href: "/chat", label: "AI Chat" },
+  { href: "/problems/create", label: "Create Post", icon: LayoutDashboard },
+  { href: "/problems/manage", label: "Manage Posts", icon: LayoutDashboard },
+  { href: "/problems/solve", label: "AI Solver", icon: Sparkles },
+  { href: "/chat", label: "AI Chat", icon: MessageSquareText },
 ]
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
   const { data: session } = authClient.useSession()
 
   const user = session?.user
   const isLoggedIn = !!user
 
-  const links = isLoggedIn
-    ? [...publicLinks, ...protectedLinks]
-    : publicLinks
+  const links = isLoggedIn ? publicLinks : publicLinks
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener("scroll", onScroll)
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+    <nav
+      className={cn(
+        "fixed top-0 z-50 w-full transition-all duration-300",
+        scrolled
+          ? "border-b border-white/10 bg-white/80 shadow-lg shadow-slate-900/5 backdrop-blur-xl"
+          : "bg-transparent",
+      )}
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600">
+        <Link href="/" className="group flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-violet-600 shadow-lg shadow-teal-500/25 transition-transform duration-300 group-hover:scale-105">
             <span className="text-sm font-bold text-white">LS</span>
           </div>
           <span className="text-lg font-semibold text-slate-900">LifeSolve</span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                pathname === link.href
-                  ? "bg-indigo-50 text-indigo-700"
-                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {links.map((link) => {
+            const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-200",
+                  isActive
+                    ? "text-teal-700"
+                    : "text-slate-600 hover:text-slate-900",
+                )}
+              >
+                {link.label}
+                {isActive && (
+                  <span className="absolute inset-0 rounded-full bg-teal-50 -z-10" />
+                )}
+              </Link>
+            )
+          })}
+          {isLoggedIn && (
+            <div className="mx-2 h-5 w-px bg-slate-200" />
+          )}
+          {isLoggedIn && protectedLinks.map((link) => {
+            const isActive = pathname === link.href
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "relative rounded-full px-3 py-2 text-sm font-medium transition-all duration-200",
+                  isActive
+                    ? "text-violet-700"
+                    : "text-slate-500 hover:text-slate-700",
+                )}
+              >
+                <span className="flex items-center gap-1.5">
+                  <link.icon className="h-4 w-4" />
+                  {link.label}
+                </span>
+              </Link>
+            )
+          })}
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -65,137 +107,172 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 rounded-lg p-1.5 transition-colors hover:bg-slate-100"
+                className="group flex items-center gap-2 rounded-full border border-slate-200 bg-white p-1 pr-3 shadow-sm transition-all duration-200 hover:border-teal-200 hover:shadow-md"
               >
-                <div className="h-8 w-8 overflow-hidden rounded-full bg-indigo-100">
+                <div className="h-8 w-8 overflow-hidden rounded-full bg-gradient-to-br from-teal-400 to-violet-500">
                   {user.image ? (
                     <img src={user.image} alt="" className="h-full w-full object-cover" />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-sm font-medium text-indigo-600">
+                    <div className="flex h-full w-full items-center justify-center text-sm font-medium text-white">
                       {user.name?.charAt(0).toUpperCase()}
                     </div>
                   )}
                 </div>
                 <span className="text-sm font-medium text-slate-700">{user.name}</span>
-                <svg className="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+                <ChevronDown className="h-4 w-4 text-slate-400 transition-transform duration-200 group-hover:rotate-180" />
               </button>
 
               {dropdownOpen && (
                 <>
                   <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)} />
-                  <div className="absolute right-0 z-20 mt-2 w-48 rounded-lg border border-slate-200 bg-white py-1 shadow-lg">
-                    <div className="border-b border-slate-100 px-4 py-2">
+                  <div className="absolute right-0 z-20 mt-2 w-56 origin-top-right animate-in rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-900/10">
+                    <div className="border-b border-slate-100 px-3 py-2.5">
                       <p className="text-sm font-medium text-slate-900">{user.name}</p>
-                      <p className="text-xs text-slate-500">{user.email}</p>
+                      <p className="text-xs text-slate-400">{user.email}</p>
                     </div>
-                    <Link
-                      href="/problems/manage"
-                      className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
-                      onClick={() => setDropdownOpen(false)}
-                    >
-                      My Posts
-                    </Link>
-                    <button
-                      onClick={async () => {
-                        setDropdownOpen(false)
-                        await authClient.signOut()
-                      }}
-                      className="block w-full px-4 py-2 text-left text-sm text-rose-600 hover:bg-slate-50"
-                    >
-                      Sign Out
-                    </button>
+                    <div className="mt-1 space-y-0.5">
+                      <Link
+                        href="/problems/manage"
+                        className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
+                        onClick={() => setDropdownOpen(false)}
+                      >
+                        <User className="h-4 w-4" />
+                        My Profile
+                      </Link>
+                      <Link
+                        href="/problems/manage"
+                        className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
+                        onClick={() => setDropdownOpen(false)}
+                      >
+                        <LayoutDashboard className="h-4 w-4" />
+                        My Posts
+                      </Link>
+                    </div>
+                    <div className="mt-1 border-t border-slate-100 pt-1">
+                      <button
+                        onClick={async () => {
+                          setDropdownOpen(false)
+                          await authClient.signOut()
+                        }}
+                        className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-rose-600 transition-colors hover:bg-rose-50"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Sign Out
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
             </div>
           ) : (
-            <>
+            <div className="flex items-center gap-2">
               <Link
                 href="/login"
-                className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+                className="rounded-full px-5 py-2 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-white/80 hover:text-slate-900"
               >
                 Sign In
               </Link>
               <Link
                 href="/register"
-                className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+                className="group relative overflow-hidden rounded-full bg-gradient-to-r from-teal-600 to-violet-600 px-5 py-2 text-sm font-medium text-white shadow-lg shadow-teal-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-teal-500/30"
               >
-                Get Started
+                <span className="relative z-10">Get Started</span>
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-violet-600 to-teal-600 transition-transform duration-300 group-hover:translate-x-0" />
               </Link>
-            </>
+            </div>
           )}
         </div>
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="inline-flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-slate-100 md:hidden"
-        >
-          {mobileOpen ? (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+          className={cn(
+            "inline-flex items-center justify-center rounded-full p-2 transition-colors md:hidden",
+            scrolled ? "text-slate-600 hover:bg-slate-100" : "text-white hover:bg-white/10",
           )}
+        >
+          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-slate-200 md:hidden">
-          <div className="space-y-1 px-4 py-3">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className={cn(
-                  "block rounded-lg px-3 py-2 text-sm font-medium",
-                  pathname === link.href
-                    ? "bg-indigo-50 text-indigo-700"
-                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-          <div className="border-t border-slate-200 px-4 py-3">
-            {isLoggedIn ? (
-              <button
-                onClick={async () => {
-                  setMobileOpen(false)
-                  await authClient.signOut()
-                }}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-rose-600 hover:bg-slate-50"
-              >
-                <div className="h-8 w-8 overflow-hidden rounded-full bg-indigo-100">
-                  {user.image ? (
-                    <img src={user.image} alt="" className="h-full w-full object-cover" />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center text-sm font-medium text-indigo-600">
-                      {user.name?.charAt(0).toUpperCase()}
-                    </div>
+        <div className="border-t border-slate-200 bg-white shadow-lg md:hidden">
+          <div className="space-y-0.5 px-3 py-3">
+            {links.map((link) => {
+              const isActive = pathname === link.href
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={cn(
+                    "flex items-center rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-teal-50 text-teal-700"
+                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
                   )}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
+            {isLoggedIn && (
+              <>
+                <div className="my-2 h-px bg-slate-100" />
+                {protectedLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
+                  >
+                    <link.icon className="h-4 w-4" />
+                    {link.label}
+                  </Link>
+                ))}
+              </>
+            )}
+          </div>
+          <div className="border-t border-slate-100 px-3 py-3">
+            {isLoggedIn ? (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-9 w-9 overflow-hidden rounded-full bg-gradient-to-br from-teal-400 to-violet-500">
+                    {user.image ? (
+                      <img src={user.image} alt="" className="h-full w-full object-cover" />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-sm font-medium text-white">
+                        {user.name?.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-slate-900">{user.name}</p>
+                    <p className="text-xs text-slate-400">{user.email}</p>
+                  </div>
                 </div>
-                Sign Out
-              </button>
+                <button
+                  onClick={async () => {
+                    setMobileOpen(false)
+                    await authClient.signOut()
+                  }}
+                  className="rounded-full p-2 text-rose-500 transition-colors hover:bg-rose-50"
+                >
+                  <LogOut className="h-5 w-5" />
+                </button>
+              </div>
             ) : (
               <div className="flex flex-col gap-2">
                 <Link
                   href="/login"
                   onClick={() => setMobileOpen(false)}
-                  className="rounded-lg px-4 py-2 text-center text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100"
+                  className="rounded-full px-4 py-2.5 text-center text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setMobileOpen(false)}
-                  className="rounded-lg bg-indigo-600 px-4 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+                  className="rounded-full bg-gradient-to-r from-teal-600 to-violet-600 px-4 py-2.5 text-center text-sm font-medium text-white shadow-lg"
                 >
                   Get Started
                 </Link>
