@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Mail, MessageSquare, MapPin, Clock, Send, CheckCircle, Sparkles } from "lucide-react"
+import { Mail, MessageSquare, MapPin, Clock, Send, CheckCircle, Sparkles, Phone } from "lucide-react"
 
 export default function ConnectPage() {
   const [name, setName] = useState("")
@@ -38,17 +38,29 @@ export default function ConnectPage() {
           >
             {[
               { icon: Mail, title: "Email Us", desc: "webdesignrahim4061@gmail.com", sub: "We reply within 24 hours" },
+              { icon: Phone, title: "WhatsApp", desc: "01873135444", sub: "Available Mon-Fri, 9AM-6PM",
+                link: "https://wa.me/8801873135444", linkLabel: "Chat on WhatsApp" },
               { icon: MapPin, title: "Our Location", desc: "Dhaka, Bangladesh", sub: "Remote-first team" },
               { icon: Clock, title: "Response Time", desc: "Mon-Fri, 9AM-6PM", sub: "Weekend support available" },
             ].map((item) => (
               <div key={item.title} className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-50">
-                  <item.icon className="h-5 w-5 text-teal-600" />
+                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${item.title === "WhatsApp" ? "bg-emerald-50" : "bg-teal-50"}`}>
+                  <item.icon className={`h-5 w-5 ${item.title === "WhatsApp" ? "text-emerald-600" : "text-teal-600"}`} />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="font-semibold text-slate-900">{item.title}</h3>
                   <p className="text-sm text-slate-600">{item.desc}</p>
                   <p className="text-xs text-slate-400">{item.sub}</p>
+                  {(item as any).link && (
+                    <a
+                      href={(item as any).link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-colors hover:bg-emerald-100"
+                    >
+                      <Phone className="h-3 w-3" /> {(item as any).linkLabel}
+                    </a>
+                  )}
                 </div>
               </div>
             ))}
