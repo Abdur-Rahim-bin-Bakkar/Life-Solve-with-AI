@@ -89,8 +89,14 @@ export async function createProblem(data: CreateProblemInput, token: string) {
   })
 }
 
-export async function getProblems() {
-  return apiFetch<ProblemResponse>("/api/problems")
+export async function getProblems(params?: { search?: string; category?: string; sort?: string; limit?: number }) {
+  const query = new URLSearchParams()
+  if (params?.search) query.set("search", params.search)
+  if (params?.category && params.category !== "All") query.set("category", params.category)
+  if (params?.sort) query.set("sort", params.sort)
+  if (params?.limit) query.set("limit", String(params.limit))
+  const qs = query.toString()
+  return apiFetch<ProblemResponse>(`/api/problems${qs ? `?${qs}` : ""}`)
 }
 
 export async function getProblemById(id: string) {

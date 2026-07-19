@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { motion } from "framer-motion"
 import {
   Heart, Frown, ThumbsUp, AlertCircle, Sparkles,
   Brain, Wallet, Briefcase, HeartHandshake, HeartPulse, Siren,
-  ArrowRight, Clock, User
+  ArrowRight, Clock, Search, SlidersHorizontal, ArrowUpDown,
 } from "lucide-react"
 import Link from "next/link"
 import { getProblems, ProblemData } from "@/lib/api/problems/problem"
@@ -26,40 +26,36 @@ const priorityStyles: Record<string, string> = {
   Emergency: "bg-red-100 text-red-700",
 }
 
+const categories = ["All", "Mental Health", "Financial", "Career", "Relationships", "Health & Wellness", "Emergency"]
+
 export default function ProblemsPage() {
   const [problems, setProblems] = useState<ProblemData[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+
   const [selectedCategory, setSelectedCategory] = useState("All")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [sortOrder, setSortOrder] = useState("new")
+
+  const fetchProblems = useCallback(async () => {
+    setLoading(true)
+    setError("")
+    const { ok, data } = await getProblems({
+      category: selectedCategory,
+      search: searchQuery || undefined,
+      sort: sortOrder,
+    })
+    if (ok && data.problems) {
+      setProblems(data.problems)
+    } else {
+      setError(data.error || "Failed to load problems")
+    }
+    setLoading(false)
+  }, [selectedCategory, searchQuery, sortOrder])
 
   useEffect(() => {
-    ;(async () => {
-      const { ok, data } = await getProblems()
-      if (ok && data.problems) {
-        setProblems(data.problems)
-      } else {
-        setError(data.error || "Failed to load problems")
-      }
-      setLoading(false)
-    })()
-  }, [])
-
-  const categories = ["All", "Mental Health", "Financial", "Career", "Relationships", "Health & Wellness", "Emergency"]
-
-  const filtered = selectedCategory === "All"
-    ? problems
-    : problems.filter((p) => p.category === selectedCategory)
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-slate-50 to-white pt-16">
-        <div className="flex flex-col items-center gap-4">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-teal-200 border-t-teal-600" />
-          <p className="text-sm text-slate-400">Loading problems...</p>
-        </div>
-      </div>
-    )
-  }
+    fetchProblems()
+  }, [fetchProblems])
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 pt-16">
@@ -69,13 +65,32 @@ export default function ProblemsPage() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10 text-center">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8 text-center">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-violet-600 shadow-lg shadow-teal-500/20">
             <Sparkles className="h-7 w-7 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">Community Problems</h1>
           <p className="mt-2 text-slate-400">Browse through shared experiences and offer your support</p>
         </motion.div>
+
+        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by title..."
+              className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 placeholder-slate-400 shadow-sm transition-all focus:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal className="h-4 w-4 text-slate-400" />
+            <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}
+              className="cursor-pointer rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 shadow-sm transition-all focus:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+            >
+              <option value="new">Newest First</option>
+              <option value="old">Oldest First</option>
+            </select>
+          </div>
+        </div>
 
         <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
           {categories.map((cat) => {
@@ -96,19 +111,25 @@ export default function ProblemsPage() {
           })}
         </div>
 
-        {error && (
+        {loading && (
+          <div className="flex items-center justify-center py-20">
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-teal-200 border-t-teal-600" />
+          </div>
+        )}
+
+        {error && !loading && (
           <div className="mb-6 rounded-xl border border-red-200 bg-red-50/80 p-4 text-sm text-red-600 backdrop-blur">
             <div className="flex items-center gap-2 font-medium"><AlertCircle className="h-4 w-4" />{error}</div>
           </div>
         )}
 
-        {filtered.length === 0 && !error && (
+        {!loading && problems.length === 0 && !error && (
           <div className="py-20 text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100">
               <AlertCircle className="h-8 w-8 text-slate-400" />
             </div>
             <p className="text-lg font-medium text-slate-500">No problems found</p>
-            <p className="mt-1 text-sm text-slate-400">Be the first to share your story</p>
+            <p className="mt-1 text-sm text-slate-400">Try adjusting your search or filters</p>
             <Link href="/problems/create" className="mt-6 inline-flex cursor-pointer items-center gap-2 rounded-xl bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal-500/25 transition-all hover:bg-teal-700">
               Share Your Problem <ArrowRight className="h-4 w-4" />
             </Link>
@@ -116,10 +137,9 @@ export default function ProblemsPage() {
         )}
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((problem, i) => {
+          {problems.map((problem, i) => {
             const meta = catMeta[problem.category] || catMeta["Mental Health"]
             const CatIcon = meta.icon
-            const totalReactions = (problem.reactions?.likes?.length || 0) + (problem.reactions?.loves?.length || 0) + (problem.reactions?.sads?.length || 0)
 
             return (
               <motion.div
@@ -152,9 +172,13 @@ export default function ProblemsPage() {
 
                   <div className="flex items-center justify-between border-t border-slate-100 pt-3">
                     <div className="flex items-center gap-2 text-xs text-slate-400">
-                      <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-violet-500 text-[10px] font-bold text-white">
-                        {problem.userName?.charAt(0).toUpperCase() || "U"}
-                      </div>
+                      {problem.userImage ? (
+                        <img src={problem.userImage} alt="" className="h-7 w-7 rounded-full object-cover ring-2 ring-slate-100" />
+                      ) : (
+                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-violet-500 text-[10px] font-bold text-white">
+                          {problem.userName?.charAt(0).toUpperCase() || "U"}
+                        </div>
+                      )}
                       <div>
                         <p className="font-medium text-slate-600 truncate max-w-[100px]">{problem.userName}</p>
                         <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{new Date(problem.createdAt).toLocaleDateString()}</span>

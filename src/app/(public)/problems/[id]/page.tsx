@@ -213,9 +213,13 @@ export default function ProblemDetailPage() {
               <h1 className="mb-4 text-2xl font-bold text-slate-900 sm:text-3xl">{problem.title}</h1>
 
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-violet-500 text-sm font-bold text-white">
-                  {problem.userName?.charAt(0).toUpperCase() || "U"}
-                </div>
+                {problem.userImage ? (
+                  <img src={problem.userImage} alt="" className="h-10 w-10 rounded-full object-cover ring-2 ring-slate-100" />
+                ) : (
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-violet-500 text-sm font-bold text-white">
+                    {problem.userName?.charAt(0).toUpperCase() || "U"}
+                  </div>
+                )}
                 <div>
                   <p className="text-sm font-semibold text-slate-700">{problem.userName}</p>
                   <span className="flex items-center gap-1 text-xs text-slate-400">
@@ -279,9 +283,13 @@ export default function ProblemDetailPage() {
               {session?.user ? (
                 <div className="mb-6">
                   <div className="flex gap-3">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-violet-500 text-xs font-bold text-white">
-                      {session.user.name?.charAt(0).toUpperCase() || "U"}
-                    </div>
+                    {session.user.image ? (
+                      <img src={session.user.image} alt="" className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-slate-100" />
+                    ) : (
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-violet-500 text-xs font-bold text-white">
+                        {session.user.name?.charAt(0).toUpperCase() || "U"}
+                      </div>
+                    )}
                     <div className="flex-1">
                       <textarea ref={commentInputRef} value={newComment} onChange={(e) => setNewComment(e.target.value)} rows={2}
                         placeholder="Share your thoughts..."
@@ -315,9 +323,13 @@ export default function ProblemDetailPage() {
                   return (
                     <div key={comment._id} className="group rounded-xl border border-slate-100 bg-white p-4 shadow-sm transition-all hover:shadow-md">
                       <div className="flex items-start gap-3">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-slate-300 to-slate-400 text-xs font-bold text-white">
-                          {comment.userName?.charAt(0).toUpperCase() || "U"}
-                        </div>
+                        {comment.userImage ? (
+                          <img src={comment.userImage} alt="" className="h-8 w-8 shrink-0 rounded-full object-cover ring-2 ring-slate-100" />
+                        ) : (
+                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-slate-300 to-slate-400 text-xs font-bold text-white">
+                            {comment.userName?.charAt(0).toUpperCase() || "U"}
+                          </div>
+                        )}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2">
                             <div className="flex items-center gap-2">
