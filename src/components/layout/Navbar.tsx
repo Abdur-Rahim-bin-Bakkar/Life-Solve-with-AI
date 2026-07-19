@@ -100,9 +100,9 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="group flex items-center gap-2 rounded-full border border-slate-200 bg-white p-1 pr-3 shadow-sm transition-all duration-200 hover:border-teal-200 hover:shadow-md"
+                className="group flex items-center rounded-full border-2 border-transparent bg-white p-0.5 shadow-sm transition-all duration-200 hover:border-teal-300 hover:shadow-md"
               >
-                <div className="h-8 w-8 overflow-hidden rounded-full bg-gradient-to-br from-teal-400 to-violet-500">
+                <div className="h-9 w-9 overflow-hidden rounded-full bg-gradient-to-br from-teal-400 to-violet-500">
                   {user.image ? (
                     <img src={user.image} alt="" className="h-full w-full object-cover" />
                   ) : (
@@ -111,8 +111,6 @@ export default function Navbar() {
                     </div>
                   )}
                 </div>
-                <span className="text-sm font-medium text-slate-700">{user.name}</span>
-                <ChevronDown className="h-4 w-4 text-slate-400 transition-transform duration-200 group-hover:rotate-180" />
               </button>
 
               {dropdownOpen && (

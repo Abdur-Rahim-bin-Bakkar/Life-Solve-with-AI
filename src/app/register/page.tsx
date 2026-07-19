@@ -284,6 +284,12 @@ export default function RegisterPage() {
               Sign in
             </Link>
           </p>
+
+          <p className="mt-3 text-center text-xs text-slate-400">
+            <Link href="/" className="hover:text-teal-600 transition-colors">
+              ← Back to Home
+            </Link>
+          </p>
         </motion.div>
       </div>
     </div>

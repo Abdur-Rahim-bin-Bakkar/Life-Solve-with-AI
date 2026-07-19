@@ -35,19 +35,9 @@ export default function LoginPage() {
     await authClient.signIn.social({ provider: "google" })
   }
 
-  const handleDemoLogin = async () => {
-    setLoading(true)
-    setError("")
-    const { error: err } = await authClient.signIn.email({
-      email: "demo@lifesolve.app",
-      password: "Demo@123456",
-    })
-    if (err) {
-      setError(err.message || "Demo login failed")
-      setLoading(false)
-      return
-    }
-    router.push("/")
+  const handleDemoLogin = () => {
+    setEmail("user1@gmail.com")
+    setPassword("Useruser")
   }
 
   return (
@@ -198,18 +188,25 @@ export default function LoginPage() {
           </button>
 
           <button
+            type="button"
             onClick={handleDemoLogin}
             disabled={loading}
             className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-amber-200 bg-amber-50/50 py-3 text-sm font-medium text-amber-700 transition-all duration-200 hover:border-amber-300 hover:bg-amber-50"
           >
             <Sparkles className="h-4 w-4" />
-            Demo Login (Quick Access)
+            Demo Login (Fill Credentials)
           </button>
 
           <p className="mt-6 text-center text-sm text-slate-500">
             Don&apos;t have an account?{" "}
             <Link href="/register" className="font-semibold text-teal-600 hover:text-teal-500">
               Sign up free
+            </Link>
+          </p>
+
+          <p className="mt-3 text-center text-xs text-slate-400">
+            <Link href="/" className="hover:text-teal-600 transition-colors">
+              ← Back to Home
             </Link>
           </p>
         </motion.div>
