@@ -18,7 +18,7 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-[70vh] overflow-hidden bg-gradient-to-br from-teal-600 via-teal-700 to-violet-900">
+    <section className="relative min-h-[70vh] p-4 overflow-hidden bg-gradient-to-br from-teal-600 via-teal-700 to-violet-900">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNCIvPjwvZz48L2c+PC9zdmc+')]" />
         <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-teal-400/20 blur-3xl" />

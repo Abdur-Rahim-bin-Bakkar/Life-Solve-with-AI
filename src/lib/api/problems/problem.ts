@@ -137,3 +137,45 @@ export async function deleteComment(problemId: string, commentId: string, token:
     headers: { Authorization: `Bearer ${token}` },
   })
 }
+
+export interface UpdateProblemInput {
+  title?: string
+  shortDescription?: string
+  fullDescription?: string
+  category?: string
+  priority?: string
+  images?: string[]
+  status?: string
+}
+
+export async function updateProblemApi(id: string, data: UpdateProblemInput, token: string) {
+  return apiFetch<ProblemResponse>(`/api/problems/${id}`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify(data),
+  })
+}
+
+export interface UserStats {
+  postCount: number
+  solvedCount: number
+  commentCount: number
+  daily: { date: string; posts: number; solved: number }[]
+}
+
+export interface OverviewStats {
+  totalPosts: number
+  solvedPosts: number
+  totalComments: number
+  daily: { date: string; posts: number; solved: number; comments: number }[]
+}
+
+export async function getUserStatsApi(token: string) {
+  return apiFetch<{ stats: UserStats }>("/api/problems/stats/my", {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+}
+
+export async function getOverviewStatsApi() {
+  return apiFetch<{ stats: OverviewStats }>("/api/problems/stats/overview")
+}
