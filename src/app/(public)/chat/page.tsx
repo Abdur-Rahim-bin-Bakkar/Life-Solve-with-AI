@@ -288,10 +288,11 @@ export default function ChatPage() {
         <AnimatePresence>
           {sidebarOpen && (
             <motion.aside
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 300, opacity: 1 }}
-              exit={{ width: 0, opacity: 0 }}
-              className="flex-shrink-0 border-r border-slate-200 bg-white/80 backdrop-blur-sm lg:relative lg:block"
+              initial={{ x: -300, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -300, opacity: 0 }}
+              transition={{ type: "tween", duration: 0.2 }}
+              className="fixed left-0 top-16 z-20 h-[calc(100vh-4rem)] border-r border-slate-200 bg-white/95 backdrop-blur-xl lg:relative lg:top-0 lg:h-auto lg:bg-white/80"
             >
               <div className="flex h-full w-[300px] flex-col">
                 <div className="flex items-center justify-between border-b border-slate-100 p-4">
@@ -377,9 +378,12 @@ export default function ChatPage() {
               <h2 className="text-sm font-bold text-slate-900">AI Chat Assistant</h2>
               <p className="text-xs text-slate-400">Conversational support · Advice · Always here to listen</p>
             </div>
-            <div className="hidden items-center gap-2 sm:flex">
-              <span className="flex items-center gap-1.5 rounded-full bg-violet-50 px-3 py-1 text-xs font-medium text-violet-600">
+            <div className="flex items-center gap-2">
+              <span className="hidden sm:flex items-center gap-1.5 rounded-full bg-violet-50 px-3 py-1 text-xs font-medium text-violet-600">
                 <Sparkles className="h-3 w-3" /> Powered by Groq
+              </span>
+              <span className="sm:hidden flex h-7 w-7 items-center justify-center rounded-full bg-violet-50">
+                <Sparkles className="h-3.5 w-3.5 text-violet-600" />
               </span>
             </div>
           </div>
@@ -401,10 +405,10 @@ export default function ChatPage() {
                         <Bot className="h-4 w-4 text-white" />
                       </div>
                     )}
-                    <div className={`max-w-[85%] sm:max-w-[75%] ${
+                    <div className={`max-w-[90%] sm:max-w-[75%] ${
                       msg.role === "user"
-                        ? "rounded-2xl rounded-tr-sm bg-gradient-to-r from-violet-500 to-violet-600 px-4 py-2.5 text-sm text-white shadow-sm"
-                        : "rounded-2xl rounded-tl-sm border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm"
+                        ? "rounded-2xl rounded-tr-sm bg-gradient-to-r from-violet-500 to-violet-600 px-3 py-2 sm:px-4 sm:py-2.5 text-sm text-white shadow-sm"
+                        : "rounded-2xl rounded-tl-sm border border-slate-200 bg-white px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-slate-700 shadow-sm"
                     }`}>
                       {msg.role === "user" ? (
                         <p className="leading-relaxed">{msg.content}</p>
@@ -436,7 +440,7 @@ export default function ChatPage() {
                     <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-teal-500 shadow-sm">
                       <Bot className="h-4 w-4 text-white" />
                     </div>
-                    <div className="max-w-[85%] sm:max-w-[75%] rounded-2xl rounded-tl-sm border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                    <div className="max-w-[90%] sm:max-w-[75%] rounded-2xl rounded-tl-sm border border-slate-200 bg-white px-3 py-2.5 sm:px-4 sm:py-3 shadow-sm">
                       {streamingText ? (
                         <div className="prose prose-sm max-w-none">
                           {renderMarkdown(streamingText)}
