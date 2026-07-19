@@ -15,7 +15,7 @@ const publicLinks = [
 ]
 
 const protectedLinks = [
-  { href: "/problems/create", label: "Create Post", icon: LayoutDashboard },
+  { href: "/problems/create", label: "Create Post", icon: Sparkles },
   { href: "/problems/manage", label: "Manage Posts", icon: LayoutDashboard },
   { href: "/problems/solve", label: "AI Solver", icon: Sparkles },
   { href: "/chat", label: "AI Chat", icon: MessageSquareText },
@@ -24,7 +24,6 @@ const protectedLinks = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
   const { data: session } = authClient.useSession()
 
@@ -33,20 +32,9 @@ export default function Navbar() {
 
   const links = isLoggedIn ? publicLinks : publicLinks
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10)
-    window.addEventListener("scroll", onScroll)
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
-
   return (
     <nav
-      className={cn(
-        "fixed top-0 z-50 w-full transition-all duration-300",
-        scrolled
-          ? "border-b border-white/10 bg-white/80 shadow-lg shadow-slate-900/5 backdrop-blur-xl"
-          : "bg-transparent",
-      )}
+      className="fixed top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 shadow-sm backdrop-blur-xl transition-all duration-300"
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="group flex items-center gap-2.5">
@@ -185,10 +173,7 @@ export default function Navbar() {
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className={cn(
-            "inline-flex items-center justify-center rounded-full p-2 transition-colors md:hidden",
-            scrolled ? "text-slate-600 hover:bg-slate-100" : "text-white hover:bg-white/10",
-          )}
+          className="inline-flex items-center justify-center rounded-full p-2 text-slate-600 transition-colors hover:bg-slate-100 md:hidden"
         >
           {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
