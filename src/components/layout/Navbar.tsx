@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { authClient } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
-import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Sparkles, MessageSquareText } from "lucide-react"
+import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Sparkles, MessageSquareText, MessageSquare } from "lucide-react"
 
 const publicLinks = [
   { href: "/", label: "Home" },
@@ -17,6 +17,7 @@ const publicLinks = [
 const protectedLinks = [
   { href: "/problems/create", label: "Create Post", icon: Sparkles },
   { href: "/problems/manage", label: "Manage Posts", icon: LayoutDashboard },
+  { href: "/messages", label: "Messages", icon: MessageSquare },
   { href: "/problems/solve", label: "AI Solver", icon: Sparkles },
   { href: "/chat", label: "AI Chat", icon: MessageSquareText },
 ]
