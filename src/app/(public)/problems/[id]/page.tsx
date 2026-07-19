@@ -210,7 +210,27 @@ export default function ProblemDetailPage() {
                 </span>
               </div>
 
-              <h1 className="mb-4 text-2xl font-bold text-slate-900 sm:text-3xl">{problem.title}</h1>
+              {problem.images && problem.images.length > 0 && (
+                <div className="mb-6 overflow-hidden rounded-xl">
+                  {problem.images.length === 1 ? (
+                    <button onClick={() => setViewerIndex(0)} className="group relative cursor-pointer overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition-all hover:shadow-md">
+                      <img src={problem.images[0]} alt="" className="max-h-96 w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10" />
+                    </button>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                      {problem.images.map((url, i) => (
+                        <button key={i} onClick={() => setViewerIndex(i)}
+                          className="group relative aspect-video cursor-pointer overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition-all hover:shadow-md"
+                        >
+                          <img src={url} alt={`Attachment ${i + 1}`} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                          <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
                 {problem.userImage ? (
@@ -228,26 +248,10 @@ export default function ProblemDetailPage() {
                 </div>
               </div>
 
+              <h1 className="mb-4 text-2xl font-bold text-slate-900 sm:text-3xl">{problem.title}</h1>
+
               <p className="mb-4 text-base font-medium text-slate-700 leading-relaxed">{problem.shortDescription}</p>
               <div className="mb-6 whitespace-pre-wrap text-sm leading-relaxed text-slate-500">{problem.fullDescription}</div>
-
-              {problem.images && problem.images.length > 0 && (
-                <div className="mb-6">
-                  <p className="mb-3 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400">
-                    <ImageIcon className="h-3.5 w-3.5" /> Attachments ({problem.images.length})
-                  </p>
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                    {problem.images.map((url, i) => (
-                      <button key={i} onClick={() => setViewerIndex(i)}
-                        className="group relative aspect-video cursor-pointer overflow-hidden rounded-xl border border-slate-200 bg-slate-100 transition-all hover:shadow-md"
-                      >
-                        <img src={url} alt={`Attachment ${i + 1}`} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10" />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
 
             <div className="border-t border-slate-100 bg-slate-50/50 px-6 py-5 sm:px-8">

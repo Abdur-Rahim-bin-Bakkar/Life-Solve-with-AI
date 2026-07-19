@@ -55,16 +55,22 @@ export default function FeaturedProblems() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                className="group flex flex-col rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden"
               >
-                <div className="flex items-center justify-between">
-                  <span className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${meta.bg} ${meta.color}`}>
-                    <CatIcon className="h-3 w-3" />{problem.category}
-                  </span>
-                  <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${priorityStyles[problem.priority] || priorityStyles.Low}`}>
-                    {problem.priority}
-                  </span>
-                </div>
+                {problem.images && problem.images[0] && (
+                  <Link href={`/problems/${problem._id}`} className="block cursor-pointer overflow-hidden">
+                    <img src={problem.images[0]} alt="" className="h-36 w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  </Link>
+                )}
+                <div className="flex flex-1 flex-col p-5 pt-4">
+                  <div className="flex items-center justify-between">
+                    <span className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${meta.bg} ${meta.color}`}>
+                      <CatIcon className="h-3 w-3" />{problem.category}
+                    </span>
+                    <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${priorityStyles[problem.priority] || priorityStyles.Low}`}>
+                      {problem.priority}
+                    </span>
+                  </div>
 
                 <Link href={`/problems/${problem._id}`} className="cursor-pointer">
                   <h3 className="mt-4 text-base font-semibold text-slate-900 line-clamp-2 transition-colors group-hover:text-teal-700">
@@ -91,6 +97,7 @@ export default function FeaturedProblems() {
                     <span className="flex items-center gap-1"><ThumbsUp className="h-3 w-3" />{problem.reactions?.likes?.length || 0}</span>
                     <span className="flex items-center gap-1"><Heart className="h-3 w-3" />{problem.reactions?.loves?.length || 0}</span>
                     <span className="flex items-center gap-1"><Frown className="h-3 w-3" />{problem.reactions?.sads?.length || 0}</span>
+                  </div>
                   </div>
                 </div>
               </motion.div>

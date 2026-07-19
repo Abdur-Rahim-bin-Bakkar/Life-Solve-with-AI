@@ -149,6 +149,11 @@ export default function ProblemsPage() {
                 transition={{ delay: i * 0.05, duration: 0.4 }}
                 className={`group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-l-4 ${meta.border}`}
               >
+                {problem.images && problem.images[0] && (
+                  <Link href={`/problems/${problem._id}`} className="block cursor-pointer overflow-hidden">
+                    <img src={problem.images[0]} alt="" className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  </Link>
+                )}
                 <div className="p-5">
                   <div className="mb-3 flex items-center justify-between">
                     <div className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${meta.bg} ${meta.color}`}>
