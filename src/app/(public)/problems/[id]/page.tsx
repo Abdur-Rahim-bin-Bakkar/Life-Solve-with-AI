@@ -11,7 +11,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import {
-  getProblemById, toggleReaction,
+  getProblemById, getProblems, toggleReaction,
   getComments, createComment, updateComment, deleteComment,
   ProblemData, CommentData
 } from "@/lib/api/problems/problem"
@@ -62,6 +62,7 @@ export default function ProblemDetailPage() {
   const [viewerIndex, setViewerIndex] = useState<number | null>(null)
 
   // comment error
+  const [relatedProblems, setRelatedProblems] = useState<ProblemData[]>([])
   const [commentError, setCommentError] = useState("")
 
   useEffect(() => {
@@ -81,6 +82,11 @@ export default function ProblemDetailPage() {
           if (r.likes?.includes(uid)) setUserReaction("like")
           else if (r.loves?.includes(uid)) setUserReaction("love")
           else if (r.sads?.includes(uid)) setUserReaction("sad")
+        }
+
+        const relRes = await getProblems({ category: pRes.data.problem.category, limit: 4 })
+        if (relRes.ok && relRes.data.problems) {
+          setRelatedProblems(relRes.data.problems.filter((p) => p._id !== id).slice(0, 3))
         }
       } else {
         setError(pRes.data.error || "Problem not found")
@@ -276,6 +282,34 @@ export default function ProblemDetailPage() {
                 })}
               </div>
             </div>
+
+            {relatedProblems.length > 0 && (
+              <div className="border-t border-slate-100 px-6 py-6 sm:px-8">
+                <div className="mb-5 flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-teal-600" />
+                  <h2 className="text-lg font-bold text-slate-900">Related Problems</h2>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  {relatedProblems.map((rp) => {
+                    const rpMeta = catMeta[rp.category] || catMeta["Mental Health"]
+                    const RpCatIcon = rpMeta.icon
+                    return (
+                      <Link key={rp._id} href={`/problems/${rp._id}`}
+                        className="group rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+                      >
+                        <div className={`flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium ${rpMeta.bg} ${rpMeta.color} w-fit mb-2`}>
+                          <RpCatIcon className="h-3 w-3" />{rp.category}
+                        </div>
+                        <h3 className="text-sm font-semibold text-slate-800 line-clamp-2 group-hover:text-teal-600 transition-colors">
+                          {rp.title}
+                        </h3>
+                        <p className="mt-1 text-xs text-slate-400 line-clamp-1">{rp.shortDescription}</p>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
 
             <div className="border-t border-slate-100 px-6 py-6 sm:px-8">
               <div className="mb-5 flex items-center gap-2">

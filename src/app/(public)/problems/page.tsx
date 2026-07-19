@@ -5,10 +5,11 @@ import { motion } from "framer-motion"
 import {
   Heart, Frown, ThumbsUp, AlertCircle, Sparkles,
   Brain, Wallet, Briefcase, HeartHandshake, HeartPulse, Siren,
-  ArrowRight, Clock, Search, SlidersHorizontal, ArrowUpDown,
+  ArrowRight, Clock, Search, SlidersHorizontal, ChevronLeft, ChevronRight,
 } from "lucide-react"
 import Link from "next/link"
 import { getProblems, ProblemData } from "@/lib/api/problems/problem"
+import { CardSkeleton } from "@/components/ui/skeleton"
 
 const catMeta: Record<string, { icon: React.ElementType; color: string; bg: string; border: string }> = {
   "Mental Health": { icon: Brain, color: "text-violet-600", bg: "bg-violet-50", border: "border-l-violet-500" },
@@ -36,6 +37,8 @@ export default function ProblemsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
   const [sortOrder, setSortOrder] = useState("new")
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
 
   const fetchProblems = useCallback(async () => {
     setLoading(true)
@@ -44,18 +47,25 @@ export default function ProblemsPage() {
       category: selectedCategory,
       search: searchQuery || undefined,
       sort: sortOrder,
+      page,
+      limit: 12,
     })
     if (ok && data.problems) {
       setProblems(data.problems)
+      setTotalPages(data.totalPages || 1)
     } else {
       setError(data.error || "Failed to load problems")
     }
     setLoading(false)
-  }, [selectedCategory, searchQuery, sortOrder])
+  }, [selectedCategory, searchQuery, sortOrder, page])
 
   useEffect(() => {
     fetchProblems()
   }, [fetchProblems])
+
+  useEffect(() => {
+    setPage(1)
+  }, [selectedCategory, searchQuery, sortOrder])
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 pt-16">
@@ -112,8 +122,10 @@ export default function ProblemsPage() {
         </div>
 
         {loading && (
-          <div className="flex items-center justify-center py-20">
-            <div className="h-10 w-10 animate-spin rounded-full border-4 border-teal-200 border-t-teal-600" />
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <CardSkeleton key={i} />
+            ))}
           </div>
         )}
 
@@ -213,6 +225,38 @@ export default function ProblemsPage() {
             )
           })}
         </div>
+
+        {!loading && totalPages > 1 && (
+          <div className="mt-10 flex items-center justify-center gap-3">
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page <= 1}
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-teal-200 hover:bg-teal-50 hover:text-teal-600 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl text-sm font-medium transition-all ${
+                  page === p
+                    ? "bg-gradient-to-r from-teal-600 to-violet-600 text-white shadow-md"
+                    : "border border-slate-200 bg-white text-slate-500 hover:border-teal-200 hover:bg-teal-50 hover:text-teal-600"
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page >= totalPages}
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-teal-200 hover:bg-teal-50 hover:text-teal-600 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

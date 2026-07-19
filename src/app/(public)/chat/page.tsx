@@ -379,7 +379,7 @@ export default function ChatPage() {
             </div>
             <div className="hidden items-center gap-2 sm:flex">
               <span className="flex items-center gap-1.5 rounded-full bg-violet-50 px-3 py-1 text-xs font-medium text-violet-600">
-                <Sparkles className="h-3 w-3" /> Powered by Gemini
+                <Sparkles className="h-3 w-3" /> Powered by Groq
               </span>
             </div>
           </div>
@@ -566,7 +566,7 @@ function WelcomeChatScreen({ onPromptClick }: { onPromptClick: (prompt: string) 
 
       <div className="mt-10 flex items-center gap-2 text-xs text-slate-300">
         <Sparkles className="h-3.5 w-3.5" />
-        <span>Powered by Gemini AI · Conversations are private</span>
+        <span>Powered by Groq AI · Conversations are private</span>
       </div>
     </motion.div>
   )

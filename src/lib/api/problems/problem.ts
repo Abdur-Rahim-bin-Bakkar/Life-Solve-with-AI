@@ -89,14 +89,21 @@ export async function createProblem(data: CreateProblemInput, token: string) {
   })
 }
 
-export async function getProblems(params?: { search?: string; category?: string; sort?: string; limit?: number }) {
+export interface PaginatedResponse extends ProblemResponse {
+  total?: number
+  page?: number
+  totalPages?: number
+}
+
+export async function getProblems(params?: { search?: string; category?: string; sort?: string; limit?: number; page?: number }) {
   const query = new URLSearchParams()
   if (params?.search) query.set("search", params.search)
   if (params?.category && params.category !== "All") query.set("category", params.category)
   if (params?.sort) query.set("sort", params.sort)
   if (params?.limit) query.set("limit", String(params.limit))
+  if (params?.page) query.set("page", String(params.page))
   const qs = query.toString()
-  return apiFetch<ProblemResponse>(`/api/problems${qs ? `?${qs}` : ""}`)
+  return apiFetch<PaginatedResponse>(`/api/problems${qs ? `?${qs}` : ""}`)
 }
 
 export async function getProblemById(id: string) {

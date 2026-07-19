@@ -341,7 +341,7 @@ export default function AISolverPage() {
             </div>
             <div className="hidden items-center gap-2 sm:flex">
               <span className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-600">
-                <Sparkles className="h-3 w-3" /> Powered by Gemini
+                <Sparkles className="h-3 w-3" /> Powered by Groq
               </span>
             </div>
           </div>
@@ -526,7 +526,7 @@ function WelcomeScreen({ onPromptClick }: { onPromptClick: (prompt: string) => v
 
       <div className="mt-10 flex items-center gap-2 text-xs text-slate-300">
         <Sparkles className="h-3.5 w-3.5" />
-        <span>Powered by Gemini AI · Your conversations are private</span>
+        <span>Powered by Groq AI · Your conversations are private</span>
       </div>
     </motion.div>
   )

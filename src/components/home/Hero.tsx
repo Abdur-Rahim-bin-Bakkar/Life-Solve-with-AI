@@ -44,7 +44,7 @@ export default function Hero() {
           </motion.div>
 
           <h1 className="text-2xl font-bold leading-tight text-white sm:text-5xl lg:text-4xl xl:text-5xl">
-            You don&apost have to
+            You don&apos;t have to
             <br />
             <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">
               face it alone
