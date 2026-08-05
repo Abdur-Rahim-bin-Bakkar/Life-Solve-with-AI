@@ -1,42 +1,81 @@
-# LifeSolve AI — Frontend
+# 🧡 LifeSolve AI — Frontend
 
-A modern, community-driven platform where people can share life challenges, get AI-powered insights, and connect with others. Built with Next.js 16, React 19, TypeScript, and Tailwind CSS v4.
+> **A safe space to share life's problems and find real solutions.**
 
-## Overview
+LifeSolve AI is a community-driven platform where people share life challenges, receive instant
+AI-powered guidance, and connect with others who genuinely understand. This repository contains the
+**Next.js frontend** that brings that experience to life.
 
-LifeSolve AI Frontend is a full-featured web application that provides:
+---
 
-- **Problem Sharing** — Post anonymous or public stories about challenges you're facing
-- **AI Assistant** — Chat with an AI powered by Groq for instant support and advice
-- **AI Problem Solver** — Get structured, thoughtful solutions for specific problems
-- **Direct Messaging** — Private one-on-one conversations with other community members
-- **Community Engagement** — React, comment, and interact with others' posts
-- **Notifications** — Real-time alerts for comments, reactions, messages, and post updates
+## 📖 Description
 
-## Key Features
+LifeSolve AI helps people who are going through tough times — stress, anxiety, career doubts,
+relationship issues, money worries, loneliness, and more. Instead of carrying a problem alone, users can:
+
+1. **Share** what they're going through (anonymously if they prefer)
+2. **Get AI-powered solutions** in seconds
+3. **Connect** with a supportive community
+
+The frontend is a modern, animated single-page experience with a fixed animated navbar, an interactive
+hero carousel, a floating AI chat widget, and full-featured pages for problems, messaging, AI tools,
+and notifications.
+
+---
+
+## 🎯 Overview
+
+The LifeSolve AI Frontend is a complete web application built with **Next.js App Router**. It provides:
+
+| Area | What it does |
+|------|--------------|
+| **🏠 Landing Page** | Animated hero carousel (auto-rotates + manual controls), stats, features, FAQ |
+| **📝 Problems** | Browse, search, filter, create, manage community problem posts |
+| **🤖 AI Problem Solver** | Structured AI guidance for specific life challenges (streaming) |
+| **💬 AI Chat Assistant** | Conversational AI support with saved session history |
+| **⚡ AI Quick Chat Widget** | Floating bottom-right chat box — ask anything, nothing is saved |
+| **✉️ Direct Messages** | Private one-on-one conversations with community members |
+| **🔔 Notifications** | Real-time alerts for comments, reactions, messages |
+| **🔐 Authentication** | Email/password + Google OAuth via Better Auth |
+
+---
+
+## 🎯 Purpose
+
+The purpose of LifeSolve AI is to make emotional and practical support **accessible, anonymous, and
+immediate**. Anyone facing a life challenge can:
+
+- **Ask anything** through the always-available AI quick chat widget and get an answer instantly.
+- **Post anonymously** without fear of judgement.
+- **Receive actionable AI insights** to break problems down and cope.
+- **Find community** among people who have faced similar situations.
+
+---
+
+## ✨ Key Features
 
 | Feature | Description |
 |---------|-------------|
+| **Animated Navbar** | Fixed navbar with slide-in animation and a flowing gradient border |
+| **Hero Carousel** | 4-slide animated banner — auto-changes and user can change it manually |
+| **AI Quick Chat Widget** | Floating bottom-right chat box; **messages are never stored in the database** |
+| **AI Chat Assistant** | Full-page conversational AI with persistent session history |
+| **AI Problem Solver** | Structured AI guidance for specific life challenges |
 | **Anonymous Posting** | Share problems with or without revealing identity |
 | **Reaction System** | Like, Love, or Sad reactions with optimistic UI updates |
 | **Comments** | Full CRUD comments on any problem post |
-| **AI Chat Assistant** | Conversational AI available 24/7 for emotional support |
-| **AI Problem Solver** | Structured AI guidance for specific life challenges |
 | **Direct Messages** | Real-time messaging between community members |
 | **Notifications** | Bell icon with dropdown for comments, reactions, messages |
-| **Image Upload** | Support for multiple images per problem via ImgBB |
+| **Image Upload** | Multiple images per problem via ImgBB |
 | **Authentication** | Email/password and Google OAuth via Better Auth |
-| **Responsive Design** | Fully responsive mobile-first UI |
-| **Animated UI** | Framer Motion animations throughout |
-| **Dark/Light** | Clean light theme with gradient accents |
+| **Search & Filter** | Search by keyword, filter by category, sort by date |
 | **Platform Stats** | Live dashboard with platform-wide activity metrics |
-| **Category System** | 6 problem categories with visual tagging |
-| **Priority Levels** | Low, Medium, High, Emergency priority indicators |
-| **Search & Filter** | Search problems by keyword, filter by category, sort by date |
-| **Session Management** | Persistent AI chat sessions with history |
 | **Activity Charts** | 7-day daily activity bar charts |
+| **Responsive Design** | Fully responsive mobile-first UI |
 
-## Technology Stack
+---
+
+## 🛠️ Technology Stack
 
 | Technology | Purpose |
 |------------|---------|
@@ -47,83 +86,97 @@ LifeSolve AI Frontend is a full-featured web application that provides:
 | **Framer Motion** | Animations and transitions |
 | **Lucide React** | Icon library |
 | **Better Auth** | Authentication (email/password + Google OAuth) |
-| **MongoDB** | Database (via Mongoose on backend) |
+| **MongoDB** | Database (via backend API) |
+| **Groq AI** | AI chat & solver responses (via backend API) |
 | **clsx + tailwind-merge** | Conditional class name utility |
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
-src/
-├── app/                          # Next.js App Router pages
-│   ├── layout.tsx                # Root layout (fonts, HTML shell)
-│   ├── not-found.tsx             # 404 page
-│   ├── error.tsx                 # Error boundary
-│   ├── globals.css               # Global styles + Tailwind
-│   ├── login/                    # Login page
-│   ├── register/                 # Registration page
-│   ├── api/
-│   │   ├── auth/[...all]/        # Better Auth API handler
-│   │   └── upload/               # Image upload API (ImgBB)
-│   └── (public)/                 # Route group with Navbar/Footer
-│       ├── layout.tsx            # Public layout wrapper
-│       ├── page.tsx              # Home/Landing page
-│       ├── about/                # About page
-│       ├── connect/              # Contact page
-│       ├── problems/
-│       │   ├── page.tsx          # Browse problems
-│       │   ├── [id]/             # Problem detail
-│       │   ├── create/           # Create problem
-│       │   ├── manage/           # Manage own problems
-│       │   └── solve/            # AI Problem Solver
-│       ├── messages/             # Direct messages
-│       └── chat/                 # AI Chat Assistant
+Frontend/
+├── public/                         # Static assets
+├── src/
+│   ├── app/                        # Next.js App Router pages
+│   │   ├── layout.tsx              # Root layout (fonts, HTML shell, AI chat widget)
+│   │   ├── not-found.tsx           # 404 page
+│   │   ├── error.tsx               # Error boundary
+│   │   ├── globals.css             # Global styles + Tailwind
+│   │   ├── login/                  # Login page
+│   │   ├── register/               # Registration page
+│   │   ├── api/
+│   │   │   ├── auth/[...all]/      # Better Auth API handler
+│   │   │   └── upload/             # Image upload API (ImgBB)
+│   │   └── (public)/               # Route group with Navbar/Footer
+│   │       ├── layout.tsx          # Public layout wrapper
+│   │       ├── page.tsx            # Home/Landing page
+│   │       ├── about/              # About page
+│   │       ├── connect/            # Contact page
+│   │       ├── problems/
+│   │       │   ├── page.tsx        # Browse problems
+│   │       │   ├── [id]/           # Problem detail
+│   │       │   ├── create/         # Create problem
+│   │       │   ├── manage/         # Manage own problems
+│   │       │   └── solve/          # AI Problem Solver
+│   │       ├── messages/           # Direct messages
+│   │       └── chat/               # AI Chat Assistant
+│   │
+│   ├── components/
+│   │   ├── ai/
+│   │   │   └── AiChatWidget.tsx    # Floating AI quick-chat widget (no DB storage)
+│   │   ├── home/                   # Landing page sections
+│   │   │   ├── Hero.tsx            # Animated carousel banner
+│   │   │   ├── Stats.tsx
+│   │   │   ├── PlatformChart.tsx
+│   │   │   ├── FeaturedProblems.tsx
+│   │   │   ├── HowItWorks.tsx
+│   │   │   ├── Categories.tsx
+│   │   │   ├── AIShowcase.tsx
+│   │   │   ├── Testimonials.tsx
+│   │   │   ├── FAQ.tsx
+│   │   │   ├── EmergencyBanner.tsx
+│   │   │   └── CTA.tsx
+│   │   ├── layout/                 # Layout components
+│   │   │   ├── Navbar.tsx          # Fixed animated navbar
+│   │   │   └── Footer.tsx
+│   │   ├── notifications/
+│   │   │   └── NotificationBell.tsx # Notification dropdown
+│   │   └── ui/                     # Reusable UI components
+│   │       ├── button.tsx
+│   │       ├── card.tsx
+│   │       ├── input.tsx
+│   │       ├── badge.tsx
+│   │       ├── section.tsx
+│   │       ├── SectionDivider.tsx
+│   │       └── skeleton.tsx
+│   │
+│   ├── lib/
+│   │   ├── auth.ts                 # Server-side Better Auth config
+│   │   ├── auth-client.ts          # Client-side auth client
+│   │   ├── utils.ts                # cn() utility
+│   │   ├── dns-setup.ts            # DNS setup for deployments
+│   │   └── api/
+│   │       ├── problems/problem.ts # Problems, comments, reactions, stats API
+│   │       ├── ai/ai.ts            # AI solver, chat + quick-chat API (streaming)
+│   │       ├── messages/messages.ts # Direct messaging API
+│   │       └── notifications/notifications.ts # Notifications API
+│   │
+│   └── types/
+│       └── index.ts                # Shared TypeScript types
 │
-├── components/
-│   ├── home/                     # Landing page sections
-│   │   ├── Hero.tsx
-│   │   ├── Stats.tsx
-│   │   ├── PlatformChart.tsx
-│   │   ├── FeaturedProblems.tsx
-│   │   ├── HowItWorks.tsx
-│   │   ├── Categories.tsx
-│   │   ├── AIShowcase.tsx
-│   │   ├── Testimonials.tsx
-│   │   ├── FAQ.tsx
-│   │   ├── EmergencyBanner.tsx
-│   │   └── CTA.tsx
-│   ├── layout/                   # Layout components
-│   │   ├── Navbar.tsx
-│   │   └── Footer.tsx
-│   ├── notifications/
-│   │   └── NotificationBell.tsx   # Notification dropdown
-│   └── ui/                       # Reusable UI components
-│       ├── button.tsx
-│       ├── card.tsx
-│       ├── input.tsx
-│       ├── badge.tsx
-│       ├── section.tsx
-│       ├── SectionDivider.tsx
-│       └── skeleton.tsx
-│
-├── lib/
-│   ├── auth.ts                   # Server-side Better Auth config
-│   ├── auth-client.ts            # Client-side auth client
-│   ├── utils.ts                  # cn() utility
-│   └── api/
-│       ├── problems/problem.ts   # Problems, comments, reactions, stats API
-│       ├── ai/ai.ts              # AI solver + chat API (streaming)
-│       ├── messages/messages.ts   # Direct messaging API
-│       └── notifications/notifications.ts  # Notifications API
-│
-└── types/
-    └── index.ts                  # Shared TypeScript types
+├── next.config.ts                  # Next.js configuration
+├── tsconfig.json                   # TypeScript configuration
+└── package.json                    # Dependencies & scripts
 ```
 
-## Page Routes
+---
+
+## 🚀 Page Routes
 
 | Route | Auth | Description |
 |-------|------|-------------|
-| `/` | No | Landing page with hero, stats, features, FAQ |
+| `/` | No | Landing page — animated hero carousel, stats, features, FAQ |
 | `/login` | No | Sign in with email or Google |
 | `/register` | No | Create account with email or Google |
 | `/about` | No | About the platform |
@@ -136,30 +189,17 @@ src/
 | `/messages` | Yes | Direct messages with other users |
 | `/chat` | Yes | AI chat assistant |
 
-## API Clients
+> The **AI Quick Chat Widget** floats in the bottom-right corner of **every page** — no login required.
 
-All API calls are organized in `src/lib/api/` by domain:
+---
 
-- **Problem API** — CRUD operations, search, reactions, comments, stats
-- **AI API** — Streaming chat/solver endpoints, session management
-- **Messages API** — User list, conversations, direct messages
-- **Notifications API** — Fetch, mark read, unread count
-
-## Authentication
-
-- Uses **Better Auth** with MongoDB adapter
-- **Email/password** registration and login
-- **Google OAuth** social login
-- Session tokens are used for authenticated API calls to the backend
-- `authClient.useSession()` React hook provides session state
-
-## Installation
+## 💻 Installation
 
 ### Prerequisites
 
 - Node.js 18+
 - npm or yarn
-- Backend server running (see backend README)
+- Backend server running (see [backend README](../backend/README.md))
 
 ### Setup
 
@@ -213,7 +253,9 @@ The app will be available at `http://localhost:3000`.
 | `GOOGLE_CLIENT_SECRET` | No | — | Google OAuth client secret |
 | `IMGBB_API_KEY` | No | — | ImgBB API key for image uploads |
 
-## Design System
+---
+
+## 🎨 Design System
 
 The UI uses a **teal and violet** gradient color scheme with:
 
@@ -224,7 +266,9 @@ The UI uses a **teal and violet** gradient color scheme with:
 - **Animations:** Framer Motion with spring/tween transitions
 - **Icons:** Lucide React icon set
 
-## Contributing
+---
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -232,6 +276,8 @@ The UI uses a **teal and violet** gradient color scheme with:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+---
+
+## 📄 License
 
 This project is private and not licensed for public distribution.
