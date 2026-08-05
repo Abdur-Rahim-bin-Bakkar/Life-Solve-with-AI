@@ -354,25 +354,62 @@ export function AiChatWidget() {
         )}
       </AnimatePresence>
 
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={toggleOpen}
-        aria-label={open ? "Close AI chat" : "Open AI chat"}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-teal-500 text-white shadow-lg shadow-violet-500/30 transition-shadow hover:shadow-xl hover:shadow-violet-500/40"
-      >
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span
-            key={open ? "close" : "open"}
-            initial={{ opacity: 0, rotate: -90 }}
-            animate={{ opacity: 1, rotate: 0 }}
-            exit={{ opacity: 0, rotate: 90 }}
-            transition={{ duration: 0.15 }}
-          >
-            {open ? <X className="h-6 w-6" /> : <MessageSquareText className="h-6 w-6" />}
-          </motion.span>
-        </AnimatePresence>
-      </motion.button>
+      <div className="relative">
+        {!open && (
+          <>
+            <motion.span
+              className="absolute -inset-2 rounded-full bg-violet-500/40"
+              animate={{ scale: [1, 1.35], opacity: [0.6, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeOut" }}
+            />
+            <motion.span
+              className="absolute -inset-2 rounded-full bg-teal-400/40"
+              animate={{ scale: [1, 1.35], opacity: [0.6, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeOut", delay: 0.8 }}
+            />
+          </>
+        )}
+
+        <motion.button
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.92 }}
+          onClick={toggleOpen}
+          aria-label={open ? "Close AI chat" : "Open AI chat"}
+          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-teal-500 text-white shadow-lg shadow-violet-500/30 transition-shadow hover:shadow-xl hover:shadow-violet-500/40"
+          animate={
+            open
+              ? { y: 0 }
+              : { y: [0, -6, 0] }
+          }
+          transition={
+            open
+              ? { duration: 0.2 }
+              : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }
+          }
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={open ? "close" : "open"}
+              initial={{ opacity: 0, rotate: -90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: 90 }}
+              transition={{ duration: 0.15 }}
+            >
+              {open ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <motion.span
+                  className="flex"
+                  animate={{ rotate: [-8, 8, -8] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <MessageSquareText className="h-6 w-6" />
+                </motion.span>
+              )}
+            </motion.span>
+          </AnimatePresence>
+        </motion.button>
+      </div>
     </div>
   )
 }
