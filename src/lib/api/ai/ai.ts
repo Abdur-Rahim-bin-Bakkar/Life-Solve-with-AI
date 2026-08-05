@@ -24,6 +24,17 @@ export interface AISessionDetail {
   updatedAt: string
 }
 
+export async function sendQuickChatMessage(messages: { role: "user" | "assistant"; content: string }[]) {
+  const res = await fetch(`${BACKEND_URL}/api/ai/quick-chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ messages }),
+  })
+  return res
+}
+
 export async function sendSolverMessage(message: string, sessionId: string | null, token: string) {
   const res = await fetch(`${BACKEND_URL}/api/ai/solver`, {
     method: "POST",
