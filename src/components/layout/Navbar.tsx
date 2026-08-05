@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { motion } from "framer-motion"
 import { authClient } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
 import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Sparkles, MessageSquareText, MessageSquare } from "lucide-react"
@@ -35,9 +36,17 @@ export default function Navbar() {
   const links = publicLinks
 
   return (
-    <nav
-      className="fixed top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 shadow-sm backdrop-blur-xl transition-all duration-300"
+    <motion.nav
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="fixed top-0 z-50 w-full bg-white/90 shadow-sm backdrop-blur-xl"
     >
+      <motion.span
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-teal-500 via-violet-500 via-amber-400 to-teal-500 bg-[length:200%_100%]"
+        animate={{ backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+      />
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="group flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-violet-600 shadow-lg shadow-teal-500/25 transition-transform duration-300 group-hover:scale-105">
@@ -65,9 +74,13 @@ export default function Navbar() {
                     : "text-slate-600 hover:text-slate-900",
                 )}
               >
-                {link.label}
+                <span className="relative z-10">{link.label}</span>
                 {isActive && (
-                  <span className="absolute inset-0 rounded-full bg-teal-50 -z-10" />
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full bg-teal-50"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
                 )}
               </Link>
             )
@@ -272,6 +285,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </nav>
+    </motion.nav>
   )
 }

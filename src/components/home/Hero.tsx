@@ -165,7 +165,7 @@ export default function Hero() {
       </div>
 
       <div
-        className="relative mx-auto flex min-h-[45vh] max-w-7xl flex-col px-4 pb-10 pt-20 sm:px-6 lg:px-8"
+        className="relative mx-auto flex min-h-[40vh] max-w-7xl flex-col px-4 pb-10 pt-20 sm:px-6 lg:px-8"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
